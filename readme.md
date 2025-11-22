@@ -1,31 +1,27 @@
 # Persian News Category Classifier 🚀
 
-A production-ready machine learning pipeline for classifying Persian news articles using LinearSVC + TF-IDF. Includes CLI tools, REST API, preprocessing utilities, and deployment configuration.
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue) ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-v1.3-orange) ![Status](https://img.shields.io/badge/Status-Production--Ready-green)
 
-![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
-![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-v1.3-orange)
-![Status](https://img.shields.io/badge/Status-Production--Ready-green)
-
-**A high-throughput automated content tagging engine designed to reduce manual moderation costs by ~80% while maintaining high data quality via Human-in-the-Loop (HITL) fallbacks.**
+**A production-ready machine learning pipeline for classifying Persian news articles using TF‑IDF + LinearSVC.** Includes CLI tools, a REST API, preprocessing utilities, and deployment configuration.
 
 ---
 
 ## 🎯 Business Value & Impact
 
-This system replaces manual categorization of news articles with a machine learning pipeline. It is optimized for speed and reliability in a production environment.
+This system replaces manual categorization of news articles with an automated ML pipeline optimized for speed and reliability.
 
-| Metric | Performance | Business Implication |
-| :--- | :--- | :--- |
-| **Automation Rate** | **~80%** | Only 20% of articles require manual review. |
-| **Accuracy (F1)** | **0.80** | High reliability on 17 distinct content categories. |
-| **Throughput** | **10k+ / day** | Lightweight architecture allows massive scaling on CPU. |
-| **Risk Control** | **Confidence Scoring** | Predictions below **65% confidence** are flagged for human review. |
+| Metric              | Performance            | Business Implication                                               |
+| :------------------ | :--------------------- | :----------------------------------------------------------------- |
+| **Automation Rate** | **~80%**               | Only 20% of articles require manual review.                        |
+| **Accuracy (F1)**   | **0.80**               | High reliability on 17 distinct content categories.                |
+| **Throughput**      | **10k+ / day**         | Lightweight architecture allows massive scaling on CPU.            |
+| **Risk Control**    | **Confidence Scoring** | Predictions below **65% confidence** are flagged for human review. |
 
 ---
 
 ## 📂 Repository Structure
 
-The project follows a modular structure separating experimentation (notebooks) from production logic (scripts).
+The project separates experimentation (notebooks) from production logic (scripts).
 
 ```text
 .
@@ -34,13 +30,13 @@ The project follows a modular structure separating experimentation (notebooks) f
 ├── src/                     # Configuration and utility modules
 │   └── config.py
 ├── notebooks/
-    └──test.ipynb            # Experimentation, EDA, and Model Training
+│   └── test.ipynb           # Experimentation, EDA, and Model Training
 ├── predict.py               # CLI tool for single-instance inference
 ├── api.py                   # Flask REST API for production deployment
 ├── requirements.txt         # Project dependencies
+├── figures/                 # Output images (confusion_matrix.png)
 └── README.md                # Project documentation
-
----
+```
 
 ---
 
@@ -48,22 +44,22 @@ The project follows a modular structure separating experimentation (notebooks) f
 
 ### 🚀 Installation
 
-1. **Clone the repository:**
+1. Clone the repository:
 
 ```bash
 git clone https://github.com/<your-username>/<your-repo>.git
 cd <your-repo>
 ```
 
-2. **Install dependencies:**
+2. Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-3. **Verify that the model exists:**
+3. Verify that the model exists:
 
-```
+```text
 models/persian_classifier_v1.pkl
 ```
 
@@ -81,7 +77,7 @@ python predict.py "تیم ملی فوتبال ایران در جام جهانی 
 
 Example Output:
 
-```
+```text
 Input: تیم ملی فوتبال ایران در جام جهانی...
 Prediction: ورزش
 Confidence: 0.9214
@@ -91,7 +87,7 @@ Confidence: 0.9214
 
 ## 🌐 REST API Usage (Production Mode)
 
-Start the API server:
+Start the API server locally:
 
 ```bash
 python api.py
@@ -109,10 +105,10 @@ Example Response:
 
 ```json
 {
-    "category": "تجارت و اقتصاد",
-    "confidence": 0.88,
-    "model_version": "v1.2_prod",
-    "status": "success"
+  "status": "success",
+  "category": "تجارت و اقتصاد",
+  "confidence": 0.88,
+  "model_version": "v1.2_prod"
 }
 ```
 
@@ -120,45 +116,55 @@ Example Response:
 
 ## 📊 Model Performance
 
-The classifier uses **LinearSVC + TF-IDF**, effective for sparse Persian text.
+The classifier uses **TF‑IDF vectorization + LinearSVC** — an efficient, interpretable choice for high‑dimensional sparse Persian text.
 
 * **Cross-Validation F1:** 0.81 (±0.016)
 * **Held-Out Test F1:** 0.80
 
 ### Confusion Matrix
 
-Ensure the file exists in the project root:
+Saved figure (ensure this file exists):
 
-```
+```text
 ./figures/confusion_matrix.png
+```
+
+Include the image in README by adding the following line where appropriate:
+
+```markdown
+![Confusion Matrix](./figures/confusion_matrix.png)
 ```
 
 ---
 
 ## 🔧 Preprocessing Pipeline
 
-* Character normalization using Parsivar
+* Character normalization (Persian/Arabic mappings) using Parsivar
 * Sentence and word tokenization
-* Punctuation and digit removal
+* Punctuation, digit removal and basic cleaning
 * Domain-specific stopword filtering
 
 ---
 
 ## ⚙️ Configuration (`src/config.py`)
 
-|                  Parameter | Description                                     |
-| -------------------------: | :---------------------------------------------- |
+Adjustable parameters (examples):
+
+| Parameter                  | Description                                     |
+| :------------------------- | :---------------------------------------------- |
 | `min_confidence_threshold` | Predictions below this threshold trigger review |
-|        `fallback_category` | Output class when confidence is too low         |
-|              `ngram_range` | TF-IDF n-gram window, default `(1, 3)`          |
+| `fallback_category`        | Category returned when confidence is too low    |
+| `ngram_range`              | TF‑IDF n‑gram window, default `(1, 3)`          |
+
+`src/config.py` provides `CONFIG` and `DEPLOYMENT_CONFIG`; prefer importing those instead of hardcoding values.
 
 ---
 
 ## 📈 Roadmap
 
 * [ ] Dockerize API for Kubernetes deployment
-* [ ] Add Prometheus monitoring for drift detection
-* [ ] Upgrade model using ParsBERT for ambiguous cases
+* [ ] Add Prometheus/Grafana monitoring for drift detection
+* [ ] Experiment with ParsBERT/transformers for ambiguous categories
 
 ---
 
@@ -167,4 +173,5 @@ Ensure the file exists in the project root:
 **Amirhadi Souratian**
 Data Scientist / ML Engineer
 
+---
 
