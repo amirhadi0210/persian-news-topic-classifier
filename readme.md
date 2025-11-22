@@ -2,10 +2,28 @@
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue) ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-v1.3-orange) ![Status](https://img.shields.io/badge/Status-Production--Ready-green)
 
-**A production-ready machine learning pipeline for classifying Persian news articles using TF‑IDF + LinearSVC.** Includes CLI tools, a REST API, preprocessing utilities, and deployment configuration.
+**A production-ready machine learning pipeline for classifying Persian news articles using TF-IDF + LinearSVC.** Includes CLI tools, a REST API, preprocessing utilities, and deployment configuration.
 
 ---
 
+## 📌 Table of Contents
+
+- [Business Value & Impact](#business-value-impact)  
+- [Repository Structure](#repository-structure)  
+- [Usage Guide](#usage-guide)  
+  - [Installation](#installation)  
+  - [Verify Model](#verify-model)  
+- [Command Line Usage (CLI)](#command-line-usage-cli)  
+- [REST API Usage (Production Mode)](#rest-api-usage-production-mode)  
+- [Model Performance](#model-performance)  
+  - [Confusion Matrix](#confusion-matrix)  
+- [Preprocessing Pipeline](#preprocessing-pipeline)  
+- [Configuration (`src/config.py`)](#configuration-srcconfigpy)  
+- [Roadmap](#roadmap)  
+- [Author](#author)
+
+---
+<a name="business-value-impact"></a>
 ## 🎯 Business Value & Impact
 
 This system replaces manual categorization of news articles with an automated ML pipeline optimized for speed and reliability.
@@ -18,7 +36,7 @@ This system replaces manual categorization of news articles with an automated ML
 | **Risk Control**    | **Confidence Scoring** | Predictions below **65% confidence** are flagged for human review. |
 
 ---
-
+<a name="repository-structure"></a>
 ## 📂 Repository Structure
 
 The project separates experimentation (notebooks) from production logic (scripts).
@@ -39,16 +57,17 @@ The project separates experimentation (notebooks) from production logic (scripts
 ```
 
 ---
-
+<a name="usage-guide"></a>
 ## 📘 Usage Guide
 
+<a name="installation"></a>
 ### 🚀 Installation
 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/<your-username>/<your-repo>.git
-cd <your-repo>
+git https://github.com/amirhadi0210/persian-news-topic-classifier
+cd persian-news-topic-classifier
 ```
 
 2. Install dependencies:
@@ -56,7 +75,7 @@ cd <your-repo>
 ```bash
 pip install -r requirements.txt
 ```
-
+<a name="verify-model"></a>
 3. Verify that the model exists:
 
 ```text
@@ -66,7 +85,7 @@ models/persian_classifier_v1.pkl
 If missing, run the training notebook to generate it.
 
 ---
-
+<a name="command-line-usage-cli"></a>
 ## 🖥️ Command Line Usage (CLI)
 
 Test a single prediction:
@@ -84,7 +103,7 @@ Confidence: 0.9214
 ```
 
 ---
-
+<a name="rest-api-usage-production-mode"></a>
 ## 🌐 REST API Usage (Production Mode)
 
 Start the API server locally:
@@ -113,7 +132,7 @@ Example Response:
 ```
 
 ---
-
+<a name="model-performance"></a>
 ## 📊 Model Performance
 
 The classifier uses **TF‑IDF vectorization + LinearSVC** — an efficient, interpretable choice for high‑dimensional sparse Persian text.
@@ -125,7 +144,7 @@ The classifier uses **TF‑IDF vectorization + LinearSVC** — an efficient, int
 
 ![Confusion Matrix](figures/confusion_matrix.png)
 ---
-
+<a name="preprocessing-pipeline"></a>
 ## 🔧 Preprocessing Pipeline
 
 * Character normalization (Persian/Arabic mappings) using Parsivar
@@ -134,7 +153,7 @@ The classifier uses **TF‑IDF vectorization + LinearSVC** — an efficient, int
 * Domain-specific stopword filtering
 
 ---
-
+<a name="configuration-srcconfigpy"></a>
 ## ⚙️ Configuration (`src/config.py`)
 
 Adjustable parameters (examples):
@@ -148,7 +167,7 @@ Adjustable parameters (examples):
 `src/config.py` provides `CONFIG` and `DEPLOYMENT_CONFIG`; prefer importing those instead of hardcoding values.
 
 ---
-
+<a name="roadmap"></a>
 ## 📈 Roadmap
 
 * [ ] Dockerize API for Kubernetes deployment
@@ -156,7 +175,7 @@ Adjustable parameters (examples):
 * [ ] Experiment with ParsBERT/transformers for ambiguous categories
 
 ---
-
+<a name="author"></a>
 ## 👤 Author
 
 **Amirhadi Souratian**
