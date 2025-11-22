@@ -123,18 +123,7 @@ The classifier uses **TF‑IDF vectorization + LinearSVC** — an efficient, int
 
 ### Confusion Matrix
 
-Saved figure (ensure this file exists):
-
-```text
-./figures/confusion_matrix.png
-```
-
-Include the image in README by adding the following line where appropriate:
-
-```markdown
-![Confusion Matrix](./figures/confusion_matrix.png)
-```
-
+![Confusion Matrix](figures/confusion_matrix.png)
 ---
 
 ## 🔧 Preprocessing Pipeline
