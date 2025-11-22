@@ -1,4 +1,6 @@
-# Persian Content Intelligence System 🚀
+# Persian News Category Classifier 🚀
+
+A production-ready machine learning pipeline for classifying Persian news articles using LinearSVC + TF-IDF. Includes CLI tools, REST API, preprocessing utilities, and deployment configuration.
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-v1.3-orange)
@@ -37,83 +39,132 @@ The project follows a modular structure separating experimentation (notebooks) f
 ├── api.py                   # Flask REST API for production deployment
 ├── requirements.txt         # Project dependencies
 └── README.md                # Project documentation
+
 ---
-2. Install dependencies:
 
-Bash
+---
 
+## 📘 Usage Guide
+
+### 🚀 Installation
+
+1. **Clone the repository:**
+
+```bash
+git clone https://github.com/<your-username>/<your-repo>.git
+cd <your-repo>
+```
+
+2. **Install dependencies:**
+
+```bash
 pip install -r requirements.txt
-3. Verify Artifacts: Ensure models/persian_classifier_v1.pkl exists. If not, run the training notebook to generate it.
+```
 
-🚀 Usage
-1. Command Line Inference (CLI)
-For testing individual sentences or debugging:
+3. **Verify that the model exists:**
 
-Bash
+```
+models/persian_classifier_v1.pkl
+```
 
+If missing, run the training notebook to generate it.
+
+---
+
+## 🖥️ Command Line Usage (CLI)
+
+Test a single prediction:
+
+```bash
 python predict.py "تیم ملی فوتبال ایران در جام جهانی عملکرد خوبی داشت"
-Output:
+```
 
-Plaintext
+Example Output:
 
+```
 Input: تیم ملی فوتبال ایران در جام جهانی...
 Prediction: ورزش
 Confidence: 0.9214
-2. REST API (Production Mode)
-Start the Flask server (or deploy via Gunicorn):
+```
 
-Bash
+---
 
+## 🌐 REST API Usage (Production Mode)
+
+Start the API server:
+
+```bash
 python api.py
-Make a Request (using cURL):
+```
 
-Bash
+Send a request with `curl`:
 
+```bash
 curl -X POST http://localhost:5000/predict \
      -H "Content-Type: application/json" \
      -d '{"title": "نرخ تورم کاهش یافت", "description": "گزارش بانک مرکزی نشان میدهد..."}'
-JSON Response:
+```
 
-JSON
+Example Response:
 
+```json
 {
     "category": "تجارت و اقتصاد",
     "confidence": 0.88,
     "model_version": "v1.2_prod",
     "status": "success"
 }
-📊 Model Performance
-The model utilizes a LinearSVC architecture with TF-IDF vectorization, chosen for its superior performance on high-dimensional sparse text data compared to heavier Deep Learning models.
+```
 
-Cross-Validation F1: 0.81 (±0.016)
+---
 
-Held-Out Test F1: 0.80
+## 📊 Model Performance
 
-Confusion Matrix
-The matrix below highlights the model's ability to distinguish between closely related categories (e.g., Economy vs. Social).
+The classifier uses **LinearSVC + TF-IDF**, effective for sparse Persian text.
 
-(Note: Ensure https://www.google.com/search?q=confusion_matrix.png is saved in your root folder)
+* **Cross-Validation F1:** 0.81 (±0.016)
+* **Held-Out Test F1:** 0.80
 
-🔧 Technical Details
-Preprocessing Pipeline
-Normalization: Character standardization (Arabic to Persian mappings) using parsivar.
+### Confusion Matrix
 
-Tokenization: Sentence and word-level splitting.
+Ensure the file exists in the project root:
 
-Cleaning: Removal of punctuation, digits, and domain-specific stopwords.
+```
+./figures/confusion_matrix.png
+```
 
-Configuration
-Settings can be adjusted in src/config.py:
+---
 
-min_confidence_threshold: 0.65 (Predictions below this trigger review).
+## 🔧 Preprocessing Pipeline
 
-fallback_category: اجتماعی (Social).
+* Character normalization using Parsivar
+* Sentence and word tokenization
+* Punctuation and digit removal
+* Domain-specific stopword filtering
 
-ngram_range: (1, 3).
+---
 
-📈 Roadmap
-[ ] Dockerization: Containerize the API for Kubernetes deployment.
+## ⚙️ Configuration (`src/config.py`)
 
-[ ] Monitoring: Integrate Prometheus for drift detection.
+|                  Parameter | Description                                     |
+| -------------------------: | :---------------------------------------------- |
+| `min_confidence_threshold` | Predictions below this threshold trigger review |
+|        `fallback_category` | Output class when confidence is too low         |
+|              `ngram_range` | TF-IDF n-gram window, default `(1, 3)`          |
 
-[ ] Transformer Upgrade: Test ParsBERT for complex, ambiguous categories.
+---
+
+## 📈 Roadmap
+
+* [ ] Dockerize API for Kubernetes deployment
+* [ ] Add Prometheus monitoring for drift detection
+* [ ] Upgrade model using ParsBERT for ambiguous cases
+
+---
+
+## 👤 Author
+
+**Amirhadi Souratian**
+Data Scientist / ML Engineer
+
+
